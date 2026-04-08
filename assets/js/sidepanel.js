@@ -42,6 +42,13 @@ function appendLog(log) {
   const emptyState = document.getElementById('empty-state');
   emptyState.classList.remove('visible');
 
+  let logContent = container.querySelector('.log-content');
+  if (!logContent) {
+    logContent = document.createElement('div');
+    logContent.className = 'log-content';
+    container.appendChild(logContent);
+  }
+
   const row = document.createElement('div');
 
   if (log.type === 'navigation') {
@@ -68,6 +75,15 @@ function appendLog(log) {
     } else if (log.platform === 'Meta Pixel') {
        tagPill.classList.add('tag-Pixel');
        tagPill.textContent = log.tagType;
+    } else if (log.platform === 'MF') {
+       tagPill.classList.add('tag-MF');
+       tagPill.textContent = log.tagType;
+    } else if (log.platform === 'Taboola') {
+       tagPill.classList.add('tag-Taboola');
+       tagPill.textContent = log.tagType;
+    } else if (log.platform === 'Dcard') {
+       tagPill.classList.add('tag-Dcard');
+       tagPill.textContent = log.tagType;
     }
     tagPill.title = log.tagType;
     row.appendChild(tagPill);
@@ -91,14 +107,14 @@ function appendLog(log) {
          paramText = log.parameters.id || '';
       } else if (log.platform === 'GA4' || log.platform === 'Google Ads') {
          paramText = `${log.parameters.tid}`; // Primarily display TID
-         if (log.parameters.en && log.parameters.en !== '-') {
-             paramText += ` | en: ${log.parameters.en}`;
-         }
       } else if (log.platform === 'Meta Pixel') {
          paramText = `${log.parameters.id}`; // Primarily display ID
-         if (log.parameters.ev && log.parameters.ev !== '-') {
-             paramText += ` | ev: ${log.parameters.ev}`;
-         }
+      } else if (log.platform === 'MF') {
+         paramText = `${log.parameters.sid}`; // Primarily display SID
+      } else if (log.platform === 'Taboola') {
+         paramText = `${log.parameters.id}`; // Primarily display ID
+      } else if (log.platform === 'Dcard') {
+         paramText = `${log.parameters.pixel}`; // Primarily display pixel ID
       }
     }
     paramDiv.textContent = paramText;
@@ -113,7 +129,7 @@ function appendLog(log) {
     row.appendChild(tsDiv);
   }
 
-  container.appendChild(row);
+  logContent.appendChild(row);
   container.scrollTop = container.scrollHeight;
 }
 

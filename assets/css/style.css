@@ -100,8 +100,15 @@ body {
 /* Main Content */
 .log-container {
   flex: 1;
-  overflow-y: auto;
+  overflow: auto;
   position: relative;
+}
+
+.log-content {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  min-width: 100%;
 }
 
 .empty-state {
@@ -207,8 +214,6 @@ body {
   color: var(--text-primary);
   margin-right: 16px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Timestamp */
@@ -225,3 +230,6 @@ body {
 .tag-GA4 { background-color: var(--color-yellow); }
 .tag-Ads { background-color: var(--color-blue); }
 .tag-Pixel { background-color: #a0c4ff; }
+.tag-MF { background-color: #ffd6a5; }
+.tag-Taboola { background-color: #bde0fe; }
+.tag-Dcard { background-color: #90e0ef; }

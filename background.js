@@ -94,7 +94,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       // a. GTM
       if (url.includes('gtm.js') && searchParams.has('id')) {
         platform = 'Google Tag Manager';
-        tagType = 'GTM Init';
+        tagType = 'GTM Init'; // Display GTM Init in the tag pill
         params.id = searchParams.get('id');
         isGtm = true;
       }
@@ -118,6 +118,27 @@ chrome.webRequest.onBeforeRequest.addListener(
         tagType = searchParams.get('ev') || 'Pixel Event';
         params.id = searchParams.get('id');
         params.ev = searchParams.get('ev') || '-';
+      }
+      // e. MF
+      else if (url.includes('cft')) {
+        platform = 'MF';
+        tagType = searchParams.get('en') || 'MF Event';
+        params.sid = searchParams.get('sid') || '-';
+        params.en = searchParams.get('en') || '-';
+      }
+      // f. Taboola
+      else if (url.includes('unip?')) {
+        platform = 'Taboola';
+        tagType = searchParams.get('en') || 'Taboola Event';
+        params.id = searchParams.get('id') || '-';
+        params.en = searchParams.get('en') || '-';
+      }
+      // g. Dcard
+      else if (url.includes('track?')) {
+        platform = 'Dcard';
+        tagType = searchParams.get('type') || 'Dcard Event';
+        params.pixel = searchParams.get('pixel') || '-';
+        params.type = searchParams.get('type') || '-';
       }
 
       if (platform) {
