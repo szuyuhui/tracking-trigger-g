@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tracking Trigger Monitor</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Load Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <button class="icon-btn" id="clear-btn" title="Clear tracking logs">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </button>
+    </div>
+
+  </header>
+
+  <main id="log-container" class="log-container">
+    <!-- Dynamic logs will be injected here -->
+  </main>
+
+  <!-- Empty state template -->
+  <div id="empty-state" class="empty-state">
+    No tracking records found. Refresh the page to begin monitoring.
+  </div>
+
+  <script src="assets/js/sidepanel.js"></script>
+</body>
+</html>
