@@ -140,6 +140,13 @@ chrome.webRequest.onBeforeRequest.addListener(
         params.pixel = searchParams.get('pixel') || '-';
         params.type = searchParams.get('type') || '-';
       }
+      // h. Line
+      else if (url.includes('tr.line.me')) {
+        platform = 'Line';
+        tagType = searchParams.get('e') || 'Line Event';
+        params.t_id = searchParams.get('t_id') || '-';
+        params.e = searchParams.get('e') || '-';
+      }
 
       if (platform) {
         const logEntry = {

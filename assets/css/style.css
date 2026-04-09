@@ -6,7 +6,7 @@
   --border-color: #3e3e42;
   --text-primary: #cccccc;
   --text-secondary: #aaaaaa;
-  
+
   --color-primary: #007acc;
   --color-blue: #a3c4f3;
   --color-green: #b9fbc0;
@@ -36,13 +36,16 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-main);
 }
+
 ::-webkit-scrollbar-thumb {
   background: #555;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
@@ -59,7 +62,8 @@ body {
   flex-shrink: 0;
 }
 
-.top-bar-left, .top-bar-right {
+.top-bar-left,
+.top-bar-right {
   display: flex;
   gap: 8px;
 }
@@ -166,17 +170,45 @@ body {
 .tag-pill {
   padding: 4px 10px;
   border-radius: 4px;
+  /* Ensure 4px border radius as requested */
   font-size: 11px;
   font-weight: 500;
-  color: #000;
+  color: #424242;
   white-space: nowrap;
-  background-color: var(--color-blue);
+  background-color: #E0E0E0;
+  /* Default gray background */
   width: 100px;
   text-align: center;
   margin-right: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
+}
+
+/* Event Category Colors with high contrast text */
+.category-init {
+  background-color: #60c666 !important;
+  /* color: #FFFFFF !important; */
+}
+
+.category-pageview {
+  background-color: #6fa9eb !important;
+  /* color: #1565C0 !important; */
+}
+
+.category-conversion {
+  background-color: #c166d8 !important;
+  /* color: #C62828 !important; */
+}
+
+.category-interaction {
+  background-color: #e2ab53 !important;
+  /* color: #EF6C00 !important; */
+}
+
+.category-default {
+  background-color: #e0e0e0d6 !important;
+  /* color: #424242 !important; */
 }
 
 /* Platform Name */
@@ -224,12 +256,40 @@ body {
   flex-shrink: 0;
 }
 
-/* Specific Pill Colors */
-.tag-GTM-false { background-color: var(--color-red); }
-.tag-GTM { background-color: var(--color-green); }
-.tag-GA4 { background-color: var(--color-yellow); }
-.tag-Ads { background-color: var(--color-blue); }
-.tag-Pixel { background-color: #a0c4ff; }
-.tag-MF { background-color: #ffd6a5; }
-.tag-Taboola { background-color: #bde0fe; }
-.tag-Dcard { background-color: #90e0ef; }
+/* Specific Pill Colors (Old/Backwards compatibility) */
+.tag-GTM-false {
+  background-color: var(--color-red);
+}
+
+.tag-GTM {
+  background-color: var(--color-green);
+}
+
+.tag-GA4 {
+  background-color: var(--color-yellow);
+}
+
+.tag-Ads {
+  background-color: var(--color-blue);
+}
+
+.tag-Pixel {
+  background-color: #a0c4ff;
+}
+
+.tag-MF {
+  background-color: #ffd6a5;
+}
+
+.tag-Taboola {
+  background-color: #bde0fe;
+}
+
+.tag-Dcard {
+  background-color: #90e0ef;
+}
+
+.tag-Line {
+  background-color: #06c755;
+  color: #fff;
+}

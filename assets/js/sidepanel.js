@@ -61,31 +61,16 @@ function appendLog(log) {
     const tagPill = document.createElement('div');
     tagPill.className = `tag-pill`;
     if (log.type === 'gtm-false') {
-       tagPill.classList.add('tag-GTM-false');
        tagPill.textContent = 'GTM-false';
-    } else if (log.platform === 'Google Tag Manager') {
-       tagPill.classList.add('tag-GTM');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'GA4') {
-       tagPill.classList.add('tag-GA4');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'Google Ads') {
-       tagPill.classList.add('tag-Ads');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'Meta Pixel') {
-       tagPill.classList.add('tag-Pixel');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'MF') {
-       tagPill.classList.add('tag-MF');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'Taboola') {
-       tagPill.classList.add('tag-Taboola');
-       tagPill.textContent = log.tagType;
-    } else if (log.platform === 'Dcard') {
-       tagPill.classList.add('tag-Dcard');
+    } else {
        tagPill.textContent = log.tagType;
     }
-    tagPill.title = log.tagType;
+    
+    // Apply category color based on keywords
+    const categoryClass = getEventCategoryClass(tagPill.textContent);
+    tagPill.classList.add(categoryClass);
+    
+    tagPill.title = tagPill.textContent;
     row.appendChild(tagPill);
 
     // Platform
@@ -115,6 +100,8 @@ function appendLog(log) {
          paramText = `${log.parameters.id}`; // Primarily display ID
       } else if (log.platform === 'Dcard') {
          paramText = `${log.parameters.pixel}`; // Primarily display pixel ID
+      } else if (log.platform === 'Line') {
+         paramText = `${log.parameters.t_id}`; // Primarily display t_id
       }
     }
     paramDiv.textContent = paramText;
@@ -141,5 +128,38 @@ document.getElementById('clear-btn').addEventListener('click', async () => {
    await chrome.storage.local.set({ [currentTabId.toString()]: tabData });
    renderFullState();
 });
+
+/**
+ * Determines the CSS class for the event tag based on keywords.
+ * Case-insensitive matching.
+ */
+function getEventCategoryClass(eventName) {
+  if (!eventName) return 'category-default';
+  
+  const name = eventName.toLowerCase();
+  
+  // 1. Initialization: GTM Init or config
+  if (name.includes('gtm init') || name.includes('config')) {
+    return 'category-init';
+  }
+  
+  // 2. Page View: page_view or PageView (exactly, case-insensitive)
+  if (name === 'page_view' || name === 'pageview') {
+    return 'category-pageview';
+  }
+  
+  // 3. Conversion: Submit or purchase
+  if (name.includes('submit') || name.includes('purchase')) {
+    return 'category-conversion';
+  }
+  
+  // 4. Custom/Interaction: Event, view or click
+  if (name.includes('event') || name.includes('view') || name.includes('click')) {
+    return 'category-interaction';
+  }
+  
+  // Default gray
+  return 'category-default';
+}
 
 init();
