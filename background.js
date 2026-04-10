@@ -122,9 +122,11 @@ chrome.webRequest.onBeforeRequest.addListener(
       // e. MF
       else if (url.includes('cft')) {
         platform = 'MF';
-        tagType = searchParams.get('en') || 'MF Event';
         params.sid = searchParams.get('sid') || '-';
         params.en = searchParams.get('en') || '-';
+        params.ea = searchParams.get('ea') || '-';
+        // Use ea for custom event name, en for pageview
+        tagType = (params.ea !== '-' ? params.ea : (params.en !== '-' ? params.en : 'MF Event'));
       }
       // f. Taboola
       else if (url.includes('unip?')) {
