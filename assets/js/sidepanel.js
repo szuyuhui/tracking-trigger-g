@@ -76,8 +76,13 @@ function appendLog(log) {
     // Platform
     const platformDiv = document.createElement('div');
     platformDiv.className = 'platform';
-    const initial = (log.platform || '?').charAt(0);
-    platformDiv.innerHTML = `<span class="platform-icon">${initial}</span> ${log.platform}`;
+    const iconFile = getPlatformIcon(log.platform);
+    if (iconFile) {
+      platformDiv.innerHTML = `<img src="assets/img/${iconFile}" class="platform-icon" alt="${log.platform}"> ${log.platform}`;
+    } else {
+      const initial = (log.platform || '?').charAt(0);
+      platformDiv.innerHTML = `<span class="platform-icon">${initial}</span> ${log.platform}`;
+    }
     row.appendChild(platformDiv);
 
     // Parameters
@@ -160,6 +165,20 @@ function getEventCategoryClass(eventName) {
   
   // Default gray
   return 'category-default';
+}
+
+function getPlatformIcon(platform) {
+  const mapping = {
+    'Google Tag Manager': 'GTM.svg',
+    'GA4': 'GA4.png',
+    'Google Ads': 'GOOGLEADS.png',
+    'Meta Pixel': 'FACEBOOK.png',
+    'Line': 'LINE.png',
+    'Taboola': 'TABOOLA.jpg',
+    'Dcard': 'DCARD.png',
+    'MF': 'cf.png'
+  };
+  return mapping[platform] || '';
 }
 
 init();

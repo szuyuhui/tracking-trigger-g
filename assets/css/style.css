@@ -223,14 +223,22 @@ body {
   gap: 8px;
 }
 
-/* Generic Icon placeholder inside platform */
+/* Platform Icon (Image or Placeholder) */
 .platform-icon {
   width: 16px;
   height: 16px;
-  border-radius: 50%;
-  background-color: #555;
   display: inline-block;
   flex-shrink: 0;
+  vertical-align: middle;
+}
+
+img.platform-icon {
+  object-fit: contain;
+}
+
+span.platform-icon {
+  border-radius: 50%;
+  background-color: #555;
   text-align: center;
   line-height: 16px;
   font-size: 10px;
