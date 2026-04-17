@@ -96,7 +96,9 @@ function appendLog(log) {
       if (log.platform === 'Google Tag Manager') {
          paramText = log.parameters.id || '';
       } else if (log.platform === 'GA4' || log.platform === 'Google Ads') {
-         paramText = `${log.parameters.tid}`; // Primarily display TID
+         const id = log.parameters.tid || log.parameters.id || '-';
+         const label = (log.parameters.label && log.parameters.label !== '-') ? ` (${log.parameters.label})` : '';
+         paramText = id + label; // Display TID/ID and Label if available
       } else if (log.platform === 'Meta Pixel') {
          paramText = `${log.parameters.id}`; // Primarily display ID
       } else if (log.platform === 'MF') {

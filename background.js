@@ -98,19 +98,62 @@ chrome.webRequest.onBeforeRequest.addListener(
         params.id = searchParams.get('id');
         isGtm = true;
       }
-      // b. GA4
-      else if (url.includes('collect') && searchParams.get('v') === '2') {
-        platform = 'GA4';
-        tagType = searchParams.get('en') || 'Page View';
-        params.tid = searchParams.get('tid') || '-';
-        params.en = searchParams.get('en') || '-';
+      // b. GA4 / Google Ads (Common collect endpoint)
+      else if (url.includes('collect')) {
+        const v = searchParams.get('v');
+        const tid = searchParams.get('tid') || '-';
+        const en = searchParams.get('en') || '-';
+
+        if (tid.startsWith('AW-')) {
+          platform = 'Google Ads';
+          tagType = en !== '-' ? en : 'Ads Event';
+          params.tid = tid;
+          params.en = en;
+        } else if (v === '2') {
+          platform = 'GA4';
+          tagType = en !== '-' ? en : 'Page View';
+          params.tid = tid;
+          params.en = en;
+        } else {
+          // Default Google Ads for other collect requests (Rule 1)
+          platform = 'Google Ads';
+          tagType = en !== '-' ? en : 'Ads Event';
+          params.tid = tid;
+          params.en = en;
+        }
       }
-      // c. Google Ads
-      else if (url.includes('collect') && searchParams.has('frm')) {
+      // c. Google Ads Conversion (Rule 2)
+      else if (url.includes('/pagead/conversion/')) {
         platform = 'Google Ads';
-        tagType = searchParams.get('en') || 'Ads Event';
-        params.tid = searchParams.get('tid') || '-';
-        params.en = searchParams.get('en') || '-';
+        
+        // Extract ID from query param or URL path
+        let convId = searchParams.get('id');
+        if (!convId) {
+          const pathParts = urlObj.pathname.split('/');
+          const index = pathParts.indexOf('conversion');
+          if (index !== -1 && pathParts[index + 1]) {
+            convId = pathParts[index + 1];
+          }
+        }
+        
+        // Standardize ID format with AW- prefix
+        if (convId && !convId.startsWith('AW-') && /^\d+$/.test(convId)) {
+          convId = 'AW-' + convId;
+        }
+
+        const label = searchParams.get('label') || '-';
+        const en = searchParams.get('en') || '';
+
+        // Requirement: If en is 'conversion', show label value as tagType
+        if (en === 'conversion' || !en) {
+          tagType = label !== '-' ? label : 'Ads Conversion';
+        } else {
+          tagType = en;
+        }
+
+        params.id = convId || '-';
+        params.label = label;
+        params.en = en || '-';
       }
       // d. Meta Pixel
       else if (url.includes('tr/') && searchParams.has('id')) {
