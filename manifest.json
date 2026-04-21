@@ -2,7 +2,14 @@
   "manifest_version": 3,
   "name": "Tracking Trigger Monitor",
   "version": "1.0.0",
-  "description": "Intercepts and displays GTM, GA4, Google Ads, and Meta Pixel tracking requests directly in a side panel.",
+  "description": "Intercepts and displays tracking requests.",
+  "icons": {
+    "16": "assets/img/icon-16.png",
+    "32": "assets/img/icon-32.png",
+    "48": "assets/img/icon-48.png",
+    "128": "assets/img/icon-128.png",
+    "400": "assets/img/icon.png"
+  },
   "permissions": [
     "sidePanel",
     "webRequest",
