@@ -109,6 +109,8 @@ function appendLog(log) {
          paramText = `${log.parameters.pixel}`; // Primarily display pixel ID
       } else if (log.platform === 'Line') {
          paramText = `${log.parameters.t_id}`; // Primarily display t_id
+      } else if (log.platform === 'TikTok') {
+         paramText = `${log.parameters.sdkid}`; // Primarily display sdkid
       }
     }
     paramDiv.textContent = paramText;
@@ -178,7 +180,8 @@ function getPlatformIcon(platform) {
     'Line': 'LINE.png',
     'Taboola': 'TABOOLA.jpg',
     'Dcard': 'DCARD.png',
-    'MF': 'cf.png'
+    'MF': 'cf.png',
+    'TikTok': 'TIKTOK.png'
   };
   return mapping[platform] || '';
 }

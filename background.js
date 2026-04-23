@@ -212,6 +212,25 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"] }
 );
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'TIKTOK_EVENT' && sender.tab) {
+    const tabId = sender.tab.id;
+    const logEntry = {
+      id: crypto.randomUUID(),
+      type: 'tracker',
+      platform: 'TikTok',
+      tagType: message.event || 'TikTok Event',
+      timestamp: Date.now(),
+      parameters: {
+        sdkid: message.sdkid || '-',
+        event_id: message.event_id || '-',
+        event: message.event || '-'
+      }
+    };
+    addLog(tabId, logEntry);
+  }
+});
+
 // Disable side panel globally first
 chrome.sidePanel.setOptions({ enabled: false });
 
